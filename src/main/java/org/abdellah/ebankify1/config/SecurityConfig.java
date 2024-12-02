@@ -1,4 +1,5 @@
 package org.abdellah.ebankify1.config;
+import org.abdellah.ebankify1.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
