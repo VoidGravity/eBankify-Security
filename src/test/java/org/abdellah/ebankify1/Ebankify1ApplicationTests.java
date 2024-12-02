@@ -1,10 +1,10 @@
-package org.abdellah.ebankify;
+package org.abdellah.ebankify1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EbankifyApplicationTests {
+class Ebankify1ApplicationTests {
 
     @Test
     void contextLoads() {
