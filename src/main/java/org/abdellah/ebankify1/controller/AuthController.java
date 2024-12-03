@@ -1,5 +1,6 @@
 package org.abdellah.ebankify1.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.abdellah.ebankify1.dto.LoginRequest;
 import org.abdellah.ebankify1.security.JwtService;
 import org.abdellah.ebankify1.service.UserService;
@@ -14,13 +15,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-
+@RequiredArgsConstructor
 
 public class AuthController {
 
     private final JwtService jwtService;
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+
 
 
     @PostMapping("/login")
@@ -42,4 +44,6 @@ public class AuthController {
     public ResponseEntity<?> adminLogin(@RequestHeader("Authorization") String basicAuth) {
         return ResponseEntity.ok().build();
     }
+
+
 }

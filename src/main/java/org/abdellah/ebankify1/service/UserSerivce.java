@@ -27,12 +27,10 @@ public class UserService {
 
     @Transactional
     public UserDTO createUser(UserDTO userDTO) {
-        // Check if user already exists
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException("User with email " + userDTO.getEmail() + " already exists");
         }
 
-        // Create new user
         User user = new User();
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -40,7 +38,6 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
-        // Convert back to DTO
         return convertToDTO(savedUser);
     }
 
@@ -63,10 +60,8 @@ public class UserService {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
-        // Update user details
         existingUser.setEmail(userDTO.getEmail());
 
-        // Only update password if a new one is provided
         if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
             existingUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         }
@@ -92,13 +87,11 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    // Utility method to convert User entity to UserDTO
     private UserDTO convertToDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
         dto.setEmail(user.getEmail());
         dto.setRole(user.getRole());
-        // Note: Never return the password in DTO
         return dto;
     }
 }
