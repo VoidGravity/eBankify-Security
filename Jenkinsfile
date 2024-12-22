@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'M3'
+        jdk 'JDK17'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,31 +15,31 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('SonarQube') {
             steps {
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000'
+                bat 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t ebankify-app .'
+                bat 'docker build -t ebankify-app .'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 8085:8080 ebankify-app'
+                bat 'docker run -d -p 8085:8080 ebankify-app'
             }
         }
     }
@@ -42,6 +47,9 @@ pipeline {
     post {
         success {
             echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
