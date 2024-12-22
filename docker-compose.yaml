@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    image: ebankify-app
+    ports:
+      - "8085:8081"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/ebankify1
+      - SPRING_DATASOURCE_USERNAME=myuser
+      - SPRING_DATASOURCE_PASSWORD=AZERAZER1234
+
+  db:
+    image: postgres
+    ports:
+      - "5444:5432"
+    environment:
+      - POSTGRES_DB=ebankify1
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=AZERAZER1234

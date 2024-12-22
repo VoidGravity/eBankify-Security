@@ -3,7 +3,8 @@ spring:
     name: ebankify-1
 
   datasource:
-    url: jdbc:postgresql://localhost:5444/ebankify1
+#    url: jdbc:postgresql://localhost:5444/ebankify1
+    url : jdbc:postgresql://gdc:5444/ebankify1
     username: myuser
     password: AZERAZER1234
     driver-class-name: org.postgresql.Driver
