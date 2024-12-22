@@ -31,13 +31,13 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    bat """
-                        mvn sonar:sonar \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.login=%SONAR_TOKEN%
-                    """
-                }
+                bat """
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=ebankify \
+                    -Dsonar.projectName=ebankify \
+                    -Dsonar.host.url=http://localhost:9000 \
+                    -Dsonar.token=%SONAR_TOKEN%
+                """
             }
         }
 
@@ -49,15 +49,13 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                script {
-                    bat '''
-                        docker network create ebankify-network || exit 0
-                        docker network connect ebankify-network gdc || exit 0
-                        docker stop ebankify-app || exit 0
-                        docker rm ebankify-app || exit 0
-                        docker run -d --name ebankify-app --network ebankify-network -p 8085:8081 ebankify-app
-                    '''
-                }
+                bat '''
+                    docker network create ebankify-network || exit 0
+                    docker network connect ebankify-network gdc || exit 0
+                    docker stop ebankify-app || exit 0
+                    docker rm ebankify-app || exit 0
+                    docker run -d --name ebankify-app --network ebankify-network -p 8085:8081 ebankify-app
+                '''
             }
         }
     }
