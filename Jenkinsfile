@@ -25,7 +25,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                bat 'mvn test jacoco:report'
+
             }
         }
 
@@ -36,7 +37,9 @@ pipeline {
                     -Dsonar.projectKey=ebankify \
                     -Dsonar.projectName=ebankify \
                     -Dsonar.host.url=http://localhost:9000 \
-                    -Dsonar.token=%SONAR_TOKEN%
+                    -Dsonar.token=%SONAR_TOKEN% \
+                    -Dsonar.java.coveragePlugin=jacoco \
+                    -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                 """
             }
         }
