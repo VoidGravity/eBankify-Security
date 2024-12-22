@@ -2,11 +2,18 @@ pipeline {
     agent any
 
     tools {
-        maven 'M3'
         jdk 'JDK17'
+        maven 'M3'
     }
 
     stages {
+        stage('Verify Tools') {
+            steps {
+                bat 'java -version'
+                bat 'mvn -version'
+            }
+        }
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/VoidGravity/eBankify-Security.git'
@@ -45,11 +52,8 @@ pipeline {
     }
 
     post {
-        success {
-            echo 'Pipeline executed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed!'
+        always {
+            echo 'Pipeline finished'
         }
     }
 }
