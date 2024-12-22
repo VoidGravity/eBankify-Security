@@ -5,6 +5,9 @@ pipeline {
         jdk 'JDK17'
         maven 'M3'
     }
+     environment {
+            SONAR_TOKEN = credentials('sonarqube-token')
+        }
 
     stages {
         stage('Verify Tools') {
