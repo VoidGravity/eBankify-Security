@@ -5,9 +5,10 @@ pipeline {
         jdk 'JDK17'
         maven 'M3'
     }
-     environment {
-            SONAR_TOKEN = credentials('sonarqube-token')
-        }
+
+    environment {
+        SONAR_TOKEN = credentials('sonarqube-token')
+    }
 
     stages {
         stage('Verify Tools') {
@@ -37,7 +38,11 @@ pipeline {
 
         stage('SonarQube') {
             steps {
-                bat 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000'
+                bat """
+                    mvn sonar:sonar \
+                    -Dsonar.host.url=http://localhost:9000 \
+                    -Dsonar.login=${SONAR_TOKEN}
+                """
             }
         }
 
